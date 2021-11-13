@@ -1,15 +1,23 @@
+html{
+    box-sizing: border-box;
+    font-size: 100%;
+    margin: 0px;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
 header{
     margin-bottom: 50px;
 }
-
 footer{
-    background-color: #68FCFF;
+    background-color: #08A4BA;
     background-size: cover;
     margin: 0px;
 }
 a{
     text-decoration: none;
-    color: #08A4BA;
+    color: #68FCFF;
 }
 a:hover{
     color: white;
@@ -21,11 +29,12 @@ a:hover{
 #syntraLogo{
     size: cover;
     width: 50px;
+    
 
 }
 p.stack {
     border-width: 1px;
-    border-color: #08A4BA;
+    border-color: #68FCFF;
     border-style: solid;
     padding: 7px;
     border-radius: 4px;
@@ -34,5 +43,8 @@ p.stack {
     width: fit-content
 }
 #algoritme, #techStack, #linkedIn{
-    color: #08A4BA;
+    color: #68FCFF;
+}
+h5{
+    color: white;
 }

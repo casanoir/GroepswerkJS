@@ -1,3 +1,8 @@
+/* 
+colors
+dark blue #3A6E75
+light blue #01BDD5
+*/
 html{
     box-sizing: border-box;
     font-size: 100%;
@@ -6,45 +11,73 @@ html{
 body{
     margin: 0;
     padding: 0;
+    background-color: #efefefbd;
 }
 header{
+    margin-top:2%;
+    margin-bottom: 50px;
+    margin-left: 7%;
+    
+}
+main{
     margin-bottom: 50px;
 }
+#about{
+    margin-bottom: 5%;
+}
+#form{
+    border-style: solid;
+    padding: 50px;
+    border-radius: 15px;
+    border-width: 1px;
+    border-color: #3A6E75;
+    background-color: #01bcd57e;
+}
 footer{
-    background-color: #08A4BA;
+    background-color: #01BDD5;
     background-size: cover;
-    margin: 0px;
+    margin: auto;
 }
 a{
     text-decoration: none;
-    color: #68FCFF;
+    color: white;
 }
 a:hover{
-    color: white;
+    color: #08A4BA;
 }
 .logo{
     background-size: cover;
-    width: 66,6%;
+    width: 60%;
 }
-#syntraLogo{
-    size: cover;
-    width: 50px;
-    
+#syntraLogoContainer{
+display: flex;
+justify-content: center;
+}
 
+.syntraLogo{
+    size: cover;
+    max-width: 80%; 
 }
-p.stack {
+p{
+    margin:0;
+}
+#algoritme, #techStack, #linkedIn{
+    color:white;
+    text-align: center;
+    padding: 25px 5px;
+    font-size: 14px;
+}
+h5{
+    color: #3A6E75;
+    margin-bottom: 20px;
+}
+
+/* p.stack {
     border-width: 1px;
-    border-color: #68FCFF;
+    border-color: white;
     border-style: solid;
     padding: 7px;
     border-radius: 4px;
-    margin-right: 8px;
-    font-size: 11px;
-    width: fit-content
-}
-#algoritme, #techStack, #linkedIn{
-    color: #68FCFF;
-}
-h5{
-    color: white;
-}
+    width: fit-content;
+    margin: auto;
+} */

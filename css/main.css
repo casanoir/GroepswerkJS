@@ -16,8 +16,7 @@ body{
 header{
     margin-top:2%;
     margin-bottom: 50px;
-    margin-left: 7%;
-    
+    margin-left: 7%;  
 }
 main{
     margin-bottom: 50px;
@@ -25,13 +24,20 @@ main{
 #about{
     margin-bottom: 5%;
 }
+.containerForForms{
+    background-color: #87D9E3;
+    padding: 2% 5%;
+    border-radius: 20px;
+}
 #form{
-    border-style: solid;
     padding: 50px;
     border-radius: 15px;
     border-width: 1px;
     border-color: #3A6E75;
     background-color: #01bcd57e;
+}
+.secondInput{
+    margin-left: 5px !important; 
 }
 footer{
     background-color: #01BDD5;
@@ -47,16 +53,12 @@ a:hover{
 }
 .logo{
     background-size: cover;
-    width: 60%;
+    width: 55%;
 }
-#syntraLogoContainer{
-display: flex;
-justify-content: center;
-}
-
 .syntraLogo{
     size: cover;
-    max-width: 80%; 
+    width: 60%;
+    margin: 0 20%;
 }
 p{
     margin:0;
@@ -66,6 +68,9 @@ p{
     text-align: center;
     padding: 25px 5px;
     font-size: 14px;
+}
+#about{
+    text-align: center;
 }
 h5{
     color: #3A6E75;

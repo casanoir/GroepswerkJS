@@ -14,35 +14,48 @@
   </header>
   <main id="main" class="container-fluid row">
     <div class="col-md-1"></div>
-    <section id="about" class="col-md-3 my-auto">
-      <h3>Welcome in the Travel Planning</h3>
+    <section id="about" class="col-md-3 my-auto text-center">
+      <h3 class="pb-3">Welcome in the TravelPlanning</h3>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex eveniet blanditiis, enim quos quibusdam nulla, fugiat eos assumenda minus aliquam nihil aspernatur officiis, dicta fugit itaque laboriosam similique dolorum omnis?
     </section>
     <div class="col-md-1"></div>
-    <section class="containerForForms col-md-6">
-      <div class="row">
-        <section id="form" class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Street" aria-label="departureStreet" aria-describedby="basic-addon1">
-            <input type="text" class="form-control secondInput" placeholder="Number" aria-label="departureStreet" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="City" aria-label="departureCity" aria-describedby="basic-addon1">
-            <input type="text" class="form-control secondInput" placeholder="Zipcode" aria-label="departureZipcode" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Country" aria-label="departureCountry" aria-describedby="basic-addon1">
-          </div>
-        </section>
-        <div class="col-md-2"></div>
-        <section id="form" class="col-md-5">
-          <!-- destination form -->
-        </section>
+    <section id="containerForForms" class="borderradius col-md-6">
+      <div class="row text-center pt-4 pb-1">
+        <h5 class="col-md-6">DEPARTURE</h5>
+        <h5 class="col-md-6">DESTINATION</h5>
       </div>
       <div class="row">
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Street" aria-label="departureStreet" aria-describedby="basic-addon1">
-          <button>Route berekenen</button>
+        <section id="form" class="col-md-6 rounded-3 px-4 py-3">
+          <div class="mb-3 row">
+            <input type="text" class="form-control w-75" id="departureStreet" placeholder="Street">
+            <input type="text" class="form-control w-25" id="departureNumber" placeholder="Number">
+          </div>
+          <div class="mb-3 row">
+            <input type="text" class="form-control w-75" id="departureCity" placeholder="City">
+            <input type="text" class="form-control w-25" id="departureZipcode" placeholder="Zipcode">
+          </div>
+          <div class="row">
+            <input type="Text" class="form-control" id="departureCountry" placeholder="Country">
+          </div>
+        </section>
+        <section id="form" class="col-md-6 rounded-3 px-4 py-3">
+          <div class="mb-3 row">
+            <input type="text" class="form-control w-75" id="departureStreet" placeholder="Street">
+            <input type="text" class="form-control w-25" id="departureNumber" placeholder="Number">
+          </div>
+          <div class="mb-3 row">
+            <input type="text" class="form-control w-75" id="departureCity" placeholder="City">
+            <input type="text" class="form-control w-25" id="departureZipcode" placeholder="Zipcode">
+          </div>
+          <div class="row">
+            <input type="Text" class="form-control" id="departureCountry" placeholder="Country">
+          </div>        
+        </section>
+      </div>
+      <div class="row mt-4">
+        <div class="row mb-3 px-5 pb-3">
+          <input type="Text" class="form-control w-75" id="range" placeholder="Range Km with fully charged battery">
+          <button class="btn btn-outline-light w-25" type="submit">Route berekenen</button>
         </div>
       </div>
     </section>
@@ -54,21 +67,21 @@
       <img class="syntraLogo" src="images/syntraLogo.png" alt="Logo Syntra Limburg">
     </section>
     <section id="linkedIn" class="col-md-2">
-      <h5>MEET THE TEAM</h5>
+      <h6>MEET THE TEAM</h6>
       <p><a href="https://www.linkedin.com/in/abderrahmane-mendoun-920421223/" target="_blank">Abderrahmane Mendoun</a></p>
       <p><a href="#" target="_blank">Berre Vandendorpe</a></p>
       <p><a href="https://www.linkedin.com/in/jari-boeckstaens-1a4ab2198/" target="_blank">Jari Boeckstaens</a></p>
       <p><a href="https://www.linkedin.com/in/liesbeth-poelmans-82b85812/" targer="_blank">Liesbeth Poelmans</a></p>
     </section>
     <section id="techStack" class="col-md-3">
-        <h5>TECHSTACK</h5>
+        <h6>TECHSTACK</h6>
         <p>AngularJS</p>
         <p>RXJS</p>
         <p>Typescript</p>
         <p>Netlyfy</p>
     </section>
     <section id="algoritme" class="col-md-2">
-      <h5>ALGORITME</h5>
+      <h6>ALGORITME</h6>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. 
     </section>
     <div class="col-md-1"></div>

@@ -1,12 +1,13 @@
 /* 
 colors
-dark blue #3A6E75
-light blue #01BDD5
+light Blue: #89D9E3
+med Blue: #44CBDC
+dark Blue: #3A6E75
 */
 html{
     box-sizing: border-box;
     font-size: 100%;
-    margin: 0px;
+    margin: 0;
 }
 body{
     margin: 0;
@@ -14,8 +15,7 @@ body{
     background-color: #efefefbd;
 }
 header{
-    margin-top:2%;
-    margin-bottom: 50px;
+    margin-top:1%;
     margin-left: 7%;  
 }
 main{
@@ -23,37 +23,40 @@ main{
 }
 #about{
     margin-bottom: 5%;
+    color: grey;
 }
-.containerForForms{
-    background-color: #87D9E3;
-    padding: 2% 5%;
-    border-radius: 20px;
+.borderradius{
+    border-radius:30px;
+}
+#containerForForms{
+    background-color: #89D9E3;
 }
 #form{
-    padding: 50px;
-    border-radius: 15px;
-    border-width: 1px;
-    border-color: #3A6E75;
-    background-color: #01bcd57e;
+    background-color: #44CBDC;
 }
-.secondInput{
-    margin-left: 5px !important; 
-}
+::placeholder {
+    font-size: 0.7em!important;
+    color: #3A6E75!important;
+ }
+
 footer{
-    background-color: #01BDD5;
+    background-color: #44CBDC;
     background-size: cover;
-    margin: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width:100%;
 }
 a{
     text-decoration: none;
     color: white;
 }
 a:hover{
-    color: #08A4BA;
+    color: #3A6E75;
 }
 .logo{
-    background-size: cover;
-    width: 55%;
+    width: 45%;
 }
 .syntraLogo{
     size: cover;
@@ -69,20 +72,7 @@ p{
     padding: 25px 5px;
     font-size: 14px;
 }
-#about{
-    text-align: center;
-}
-h5{
+h3, h5, h6{
     color: #3A6E75;
-    margin-bottom: 20px;
 }
 
-/* p.stack {
-    border-width: 1px;
-    border-color: white;
-    border-style: solid;
-    padding: 7px;
-    border-radius: 4px;
-    width: fit-content;
-    margin: auto;
-} */

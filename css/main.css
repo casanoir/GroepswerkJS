@@ -15,8 +15,9 @@ body{
     background-color: #efefefbd;
 }
 header{
-    margin-top:1%;
-    margin-left: 7%;  
+    background-image: url("../images/header.svg");
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 main{
     margin-bottom: 50px;
@@ -57,6 +58,8 @@ a:hover{
 }
 .logo{
     width: 45%;
+    margin-left: 7%;
+    margin-bottom: 1%;
 }
 .syntraLogo{
     size: cover;

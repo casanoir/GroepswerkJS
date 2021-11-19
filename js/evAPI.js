@@ -21,9 +21,16 @@ function showEVdataMake() {
 showEVdataMake();
 
 ///// HTML => show Model in dropdown based on selection of model
-function showEVdataModel() {
+// Parameter: the make selected by the user
+function showEVdataModel(make) {
     fetch('http://localhost:3000/cars').then(response => response.json()).then(data => {
-        const mapModel = data.map((item) => {
+        // First filter the entire data based on the make, result is the filtered data
+        const filteredData = data.filter((item) => {
+            return item.Make === make;
+        });
+        // Second map the parts of the filtered data that are of interest, 
+        // result is a list containing all Models of the selected make
+        const mapModel = filteredData.map((item) => {
             return (item.Model);
         });
         var select = document.getElementById("model");
@@ -39,7 +46,16 @@ function showEVdataModel() {
         console.log(mapModel)
     });
 }
-showEVdataModel();
+
+/* // Add event listener to the make selector 
+// If the value is changed, i.e. the user has selected a value, 
+// we call the function to fill in the models, corresponding to the selected make (which we ge pass along as a parameter)
+// parameters are not allowed in event handlers, so we enclose this in an anonymous function
+ */
+document.getElementById("make").addEventListener("change", function() {
+    showEVdataModel(document.getElementById("make").value);
+});
+
 
 ///// to be used in Map calculation
 function showEVdataBattery() {

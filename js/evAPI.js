@@ -20,20 +20,39 @@ function showEVdataMake() {
 }
 showEVdataMake();
 
+// Remove all child elements from the DOM of the element passed as the first argument, el
+// Also append a new child element with the textContent choose your model to maintain continuity
+function removeAllChildrenAndClean(el) {
+    while (el.firstChild) {
+        el.removeChild(el.firstChild);
+    }
+    let elem = document.createElement("option");
+    elem.textContent = "Choose your Model";
+    el.appendChild(elem);
+    return;
+}
+
+
 ///// HTML => show Model in dropdown based on selection of model
 // Parameter: the make selected by the user
 function showEVdataModel(make) {
+    if (make === "Choose your Make") {
+        var select = document.getElementById("model");
+        removeAllChildrenAndClean(select);
+        return;
+    }
     fetch('http://localhost:3000/cars').then(response => response.json()).then(data => {
-        // First filter the entire data based on the make, result is the filtered data
+        // First: filter the entire data based on the make, result is the filtered data
         const filteredData = data.filter((item) => {
             return item.Make === make;
         });
-        // Second map the parts of the filtered data that are of interest, 
+        // Second: map the parts of the filtered data that are of interest, 
         // result is a list containing all Models of the selected make
         const mapModel = filteredData.map((item) => {
             return (item.Model);
         });
         var select = document.getElementById("model");
+        removeAllChildrenAndClean(select);
         var options = mapModel;
         
         for(var i = 0; i < options.length; i++) {

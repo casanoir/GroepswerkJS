@@ -76,49 +76,73 @@ document.getElementById("make").addEventListener("change", function() {
 });
 
 
-///// to be used in Map calculation
-function showEVdataBattery() {
+///// to be used in Accordion - charging calculation
+function showEVdataBattery(model) {
     fetch('http://localhost:3000/cars').then(response => response.json()).then(data => {
-        const mapBattery = data.map((item) => {
-            return (item.Battery_capacity_kWh);
+        const filteredBattery = data.filter((item) => {
+            return item.Model === model;
         });
-        console.log(mapBattery);
-    });
+        const mapBattery = filteredBattery.map((item) => {
+            return (item.Battery_capacity_kWh);///
+        });
+    console.log(mapBattery);
+});
 }
-showEVdataBattery();
+
+document.getElementById("model").addEventListener("change", function() {
+    showEVdataBattery(document.getElementById("model").value);
+});
 
 ///// to be used in Map calculation
-function showEVdataRange() {
+function showEVdataRange(model) {
     fetch('http://localhost:3000/cars').then(response => response.json()).then(data => {
-        const mapRange = data.map((item) => {
+        const filteredRange = data.filter((item) => {
+            return item.Model === model;
+        });
+        const mapRange = filteredRange.map((item) => {
             return (item.Range_WLTP_km);
         });
-        console.log(mapRange);
-    });
+    console.log(mapRange);
+});
 }
-showEVdataRange();
 
-///// to be used in Map calculation
-function showEVdataChargingPower() {
-    fetch('http://localhost:3000/cars').then(response => response.json()).then(data => {
-        const mapChargingPower = data.map((item) => {
+document.getElementById("model").addEventListener("change", function() {
+    showEVdataRange(document.getElementById("model").value);
+});
+
+///// to be used in Accordion - charging calculation
+function showEVdataChargingPower(model) {
+fetch('http://localhost:3000/cars').then(response => response.json()).then(data => {
+        const filteredChargingPower = data.filter((item) => {
+            return item.Model === model;
+        });
+        const mapChargingPower = filteredChargingPower.map((item) => {
             return (item.Maximum_DC_chargingPower_kW);
         });
-        console.log(mapChargingPower);
-    });
+    console.log(mapChargingPower);
+});
 }
-showEVdataChargingPower();
 
-///// to be used in Map calculation
-function showEVdataEnergyConsumption() {
+document.getElementById("model").addEventListener("change", function() {
+    showEVdataChargingPower(document.getElementById("model").value);
+});
+
+///// to be used in Accordion - charging calculation
+function showEVdataEnergyConsumption(model) {
     fetch('http://localhost:3000/cars').then(response => response.json()).then(data => {
-        const mapEnergyConsumption = data.map((item) => {
-            return (item.mean_EnergyConsumption_kWh_per_100km);
+        const filteredEnergyConsumption = data.filter((item) => {
+            return item.Model === model;
         });
-        console.log(mapEnergyConsumption);
-    });
+        const mapEnergyConsumption = filteredEnergyConsumption.map((item) => {
+            return (item.mean_EnergyConsumption_kWh_per_100km);///
+        });
+    console.log(mapEnergyConsumption);
+});
 }
-showEVdataEnergyConsumption();
+
+document.getElementById("model").addEventListener("change", function() {
+    showEVdataEnergyConsumption(document.getElementById("model").value);
+});
 
 
 

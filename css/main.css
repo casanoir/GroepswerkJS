@@ -1,15 +1,10 @@
-/* 
-colors
-light Blue: #89D9E3
-med Blue: #44CBDC
-dark Blue: #3A6E75
-*/
 html{
     box-sizing: border-box;
     font-size: 100%;
     margin: 0;
 }
 body{
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #efefefbd;
@@ -30,18 +25,39 @@ main{
     border-radius:30px;
 }
 #containerForForms{
-    background-color: #89D9E3;
+    background-color: white;
+    position: relative;
 }
-#form{
-    background-color: #44CBDC;
+.vehicle{
+    background-color: #3A6E75;
 }
 ::placeholder {
-    font-size: 0.7em!important;
+    font-size: 14px!important;
     color: #3A6E75!important;
  }
 
+.form-control{
+     font-family: 'Roboto', sans-serif !important;
+     font-size: 14px!important;
+     color: #3A6E75;
+ }
+.custom-select::before{
+    background-color: white;
+}
+
+.btn-dark{
+    background-color: #3A6E75;
+    border-style: none;
+    color: white;
+    font-size: 1.4em!important;
+    margin-bottom: -5%;
+    margin-right: -5%;
+}
+.btn-dark:hover{
+    background-color: #48C6D9;
+}
 footer{
-    background-color: #44CBDC;
+    background-color: #48C6D9;
     background-size: cover;
     width:100%;
 }
@@ -53,7 +69,7 @@ a:hover{
     color: #3A6E75;
 }
 .logo{
-    width: 45%;
+    width: 40%;
     margin-left: 7%;
     margin-bottom: 1%;
 }
@@ -71,7 +87,14 @@ p{
     padding: 25px 5px;
     font-size: 14px;
 }
-h3, h5, h6{
+h2, h4, h5, h6{
     color: #3A6E75;
+    font-weight: 700;
 }
+h3{
+    color: white;
+    font-weight: 700;
+}
+
+
 

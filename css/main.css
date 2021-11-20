@@ -95,6 +95,16 @@ h3{
     color: white;
     font-weight: 700;
 }
+/*Google Map Style*/
+#googleMap{
+    width:80%;
+    height:100vh;
+
+}
+.alert-info {
+    padding: 5px;
+    margin-top: 15px;
+}
 
 
 

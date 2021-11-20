@@ -136,8 +136,8 @@ function showEVdataEnergyConsumption(model) {
         const mapEnergyConsumption = filteredEnergyConsumption.map((item) => {
             return (item.mean_EnergyConsumption_kWh_per_100km);///
         });
-    console.log(mapEnergyConsumption);
-});
+        console.log(mapEnergyConsumption);
+    });
 }
 
 document.getElementById("model").addEventListener("change", function() {
@@ -145,6 +145,27 @@ document.getElementById("model").addEventListener("change", function() {
 });
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Alternative method, reduce amount of fetches by including all in one call
 
+function showTotalEVData(model) {
+    fetch('http://localhost:3000/cars').then(response => response.json()).then(data => {
+        const filteredEnergyConsumption = data.filter((item) => {
+            return item.Model === model;
+        });
+        const mapEnergyConsumption = filteredEnergyConsumption.map((item) => {
+            const resultMap = {};
+            resultMap["mean_EnergyConsumption_kWh_per_100km"] = item.mean_EnergyConsumption_kWh_per_100km;
+            resultMap["Maximum_DC_chargingPower_kW"] = item.Maximum_DC_chargingPower_kW;
+            resultMap["Range_WLTP_km"] = item.Range_WLTP_km;
+            resultMap["Battery_capacity_kWh"] = item.Battery_capacity_kWh;
+            return resultMap;
+        });
+        console.log(mapEnergyConsumption);
+    });
+}
 
-
+document.getElementById("model").addEventListener("change", function() {
+    showTotalEVData(document.getElementById("model").value);
+});

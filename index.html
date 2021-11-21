@@ -28,7 +28,8 @@
         <h3 class="col-md-7">What is your favorite electric vehicle?</h3>
         <div class="col-md-5 my-auto custom-select">
           <select id="make" class="form-control shadow-none m-2"><option>Choose your Make</option></select> 
-          <select id="model" class="form-control shadow-none m-2"><option>Choose your Model</option></select> 
+          <select id="model" class="form-control shadow-none m-2"><option>Choose your Model</option></select>
+          <input type="text" class="form-control shadow-none m-2" id="batteryLevel" placeholder="batterylevel in percentage">
         </div>
       </div>
       <div class="row w-75 position-relative start-50 translate-middle mt-3">
@@ -74,22 +75,24 @@
     </section>
     <section id="algoritme" class="col-md-2">
       <h6>ALGORITME</h6>
+      <span class="chargeTime" id="chargeTime"></span>
+      <span class="chargePrice" id="chargePrice"></span>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. 
     </section>
     <div class="col-md-1"></div>
   </div>
 </footer>
 
+<!--Javascript for ocmAPI-->
+<script src="js/ocmAPI.js"></script>
+<!--Javascript for evAPI-->
+<script src="js/evAPI.js"></script>
 <!--Javascript for Map-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb0s-yIp8pP4RcwrNGjEYkW9v4sj667oY&libraries=places&callback=myMap"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
 <script src="js/googleMapsAPI.js"></script>
-<!--Javascript for evAPI-->
-<script src="js/evAPI.js"></script>
 <!--Javascript for Main-->
 <script src="js/main.js"></script>
-<!--Javascript for ocmAPI-->
-<script src="js/ocmAPI.js"></script>
 </body>
 </html>

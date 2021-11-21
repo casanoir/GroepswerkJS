@@ -64,7 +64,7 @@ function calculateRoute() {
       origin: document.getElementById("from").value,
       destination: document.getElementById("to").value,
       travelMode:  google.maps.DirectionsTravelMode.DRIVING, //WALKING, BYCYCLING, TRANSIT
-      unitSystem: google.maps.UnitSystem.IMPERIAL
+      unitSystem: google.maps.UnitSystem.METRIC
   }
 
   //pass the request to the route method

@@ -137,6 +137,17 @@ function showEVdataEnergyConsumption(model) {
             return (item.mean_EnergyConsumption_kWh_per_100km);///
         });
         console.log(mapEnergyConsumption);
+
+        const distanceAB = 400; // From GoogleMaps API (To Do)
+
+        function calculateChargePrice () {
+            let distance = distanceAB; // From GoogleMaps API (Abdu - To Do)
+            let consumption = mapEnergyConsumption;
+            let price = 0.26; // from ChargePrice API => NA because data is not clean
+            document.getElementById("chargePrice").innerHTML = ((distance/100)*consumption)*price+` €`;
+            /*<span class="chargePrice" id="chargePrice"></span> To be added to HTML accordion*/        
+        }
+        console.log(calculateChargePrice());
     });
 }
 
@@ -144,17 +155,16 @@ document.getElementById("model").addEventListener("change", function() {
     showEVdataEnergyConsumption(document.getElementById("model").value);
 });
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Alternative method, reduce amount of fetches by including all in one call
 
 function showTotalEVData(model) {
     fetch('http://localhost:3000/cars').then(response => response.json()).then(data => {
-        const filteredEnergyConsumption = data.filter((item) => {
+        const filteredEVdata = data.filter((item) => {
             return item.Model === model;
         });
-        const mapEnergyConsumption = filteredEnergyConsumption.map((item) => {
+        const mapEVdata = filteredEVdata.map((item) => {
             const resultMap = {};
             resultMap["mean_EnergyConsumption_kWh_per_100km"] = item.mean_EnergyConsumption_kWh_per_100km;
             resultMap["Maximum_DC_chargingPower_kW"] = item.Maximum_DC_chargingPower_kW;
@@ -162,10 +172,22 @@ function showTotalEVData(model) {
             resultMap["Battery_capacity_kWh"] = item.Battery_capacity_kWh;
             return resultMap;
         });
-        console.log(mapEnergyConsumption);
+        console.log(mapEVdata);
     });
 }
-
 document.getElementById("model").addEventListener("change", function() {
     showTotalEVData(document.getElementById("model").value);
 });
+
+
+/* //// Calculate chargeTime
+https://www.energuide.be/en/questions-answers/how-long-does-it-take-to-charge-an-electric-car-battery/1621/
+
+1. First calculate your load power (P), by multiplying the voltage (U in volts) by the current (I, in amps). You get a value in watts.
+P = U x I => N/A, data not available
+For example: 16 A x 230 V = 3,680 W
+2. Divide the load power by 1,000 for a value in kilowatts.
+For example: 3,680 W = 3.7 kilowatts => From ChargePrice API
+3. Divide the power of your battery (also in kW) by the figure obtained to get the charging time.
+For example:  24 kW/ 3.7 kW= 6.5 hours => Battery Power vs Battery Capacity???? / kW vs kWh
+ */

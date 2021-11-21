@@ -89,8 +89,9 @@ function showTotalEVData(model) {
             return resultMap;
         });
         calculateChargeTime(mapEVdata[0].Maximum_DC_chargingPower_kW, mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km)
-        console.log(mapEVdata);
+        /// console.log(mapEVdata);
         calculateChargePrice(mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
+        calculateRangePercentage (mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
     });
 }
 document.getElementById("model").addEventListener("change", function() {
@@ -104,19 +105,19 @@ Equation (charge time demand=Vehicle Battery Capacity (KWH)/ Charging Station De
 * battery capacity to be loaded = (capacity*level)-((distance/100)*consumption)
 
 => battery capacity to be loaded / load power.
-
-question: consumption * (range/100) should be equal to capacity => not the case in API
  */
 function calculateChargeTime(carchargingPower, battery, consumption) {
     ////pick smallest chargingPower => car vs chargePoint
     let chargePointChargingPower = 22; /// to be linked to priceCharge API
     let chargingPower = (carchargingPower >= chargePointChargingPower) ? chargePointChargingPower : carchargingPower;
-
     ////calculate charging time (float)
     let distance = 300; // From GoogleMaps API (Abdu - To Do)
-    let level = 0.9; ////document.getElementById("batteryLevel").value does not work???;
-    let number = ((battery*level)-((distance/100)*consumption)) / chargingPower;
-
+    let temp = document.getElementById("batteryLevel").value;
+    ///console.log("temp",temp);
+    let level = (100-temp)/100;
+    ////console.log("level",level);
+    let number = ((battery*level)+((distance/100)*consumption)) / chargingPower;
+    console.log("number",number);
     ////convert float to hh:mm
     let sign = (number >= 0) ? 1 : -1;
     number = number * sign;
@@ -129,9 +130,13 @@ function calculateChargeTime(carchargingPower, battery, consumption) {
     minute = '0' + minute; 
     }
     sign = sign == 1 ? '' : '-';
-    time = sign + hour + ':' + minute;
-    document.getElementById("chargeTime").innerHTML = time
-}
+    time = sign + hour + ':' + minute;``
+    console.log("time",time)
+    return time
+};
+document.getElementById("batteryLevel").addEventListener("change", function() {
+    showTotalEVData(document.getElementById("model").value);
+});
 
 ////calculate chargetime to be used in Accordion
 function calculateChargePrice (consumption) {
@@ -140,3 +145,16 @@ function calculateChargePrice (consumption) {
     document.getElementById("chargePrice").innerHTML = Math.round(((((distance/100)*consumption)*price)+Number.EPSILON)*100)/100 +` €`;
     //// based on level battery: (((range100%-rangelevel)+(distance/100)*consumption))*price+` €`;        
 }
+
+/*///calculate Range based on percentage level & taking into account 
+=> problem: consumption * (range/100) should be equal to capacity => not the case in API
+=> solution: battery capacity/consumpion*100
+=> percentage: solution*level/100
+*/
+function calculateRangePercentage (battery, consumption){
+    let correctedRange = battery / consumption * 100;
+    let temp = document.getElementById("batteryLevel").value;
+    let rangePercentage = correctedRange*90/100;
+    console.log(rangePercentage);
+    return rangePercentage;
+};

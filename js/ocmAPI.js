@@ -9,6 +9,7 @@
 //                          "latitude" as an integer                       //
 //                         "longitude" as an integer                       //
 //                             "name" as a string                          //
+//                           "cargeKW" as an integer                       //
 //  "price": "Free text description of likely usage costs associated with  //
 //this site. Generally relates to parking charges whether network operates //
 //this site as Free" -> i guess as a string                                //
@@ -20,7 +21,7 @@ const baseUrl = "https://api.openchargemap.io/v3/poi";
 const searchRadius = 20; //distance from the provided lati and longi to look for stations
 const radiusUnit = "km"; //unit for the distance to look in (can be "km" or "miles")
 const maxResults = 1; //amount of chargestations to return from the API (setting it to 1 only returns the nearest)
-const enableDebug = false; //enables console logs if true
+const enableDebug = true; //enables console logs if true
 //////////////////////////////////SETTINGS END///////////////////////////////
 
 
@@ -55,6 +56,7 @@ async function getChargingStations(latitude, longitude) {
         bestStation["latitude"] = data[0].AddressInfo.Latitude;
         bestStation["longitude"] = data[0].AddressInfo.Longitude;
         bestStation["price"] = data[0].UsageCost;
+        bestStation["chargeKW"] = data[0].Connections[0].PowerKW;
     if(enableDebug) console.log(bestStation);
     return bestStation;
 }

@@ -136,8 +136,8 @@ function calculateChargeTime(carchargingPower, consumption) {
     }
     sign = sign == 1 ? '' : '-';
     chargeTime = sign + hour + ':' + minute;``
-    console.log("chargeTime",chargeTime)
-    return chargeTime
+    console.log("chargeTime",chargeTime);
+    return chargeTime;
 };
 /* document.getElementById("batteryLevel").addEventListener("change", function() {
     showTotalEVData(document.getElementById("model").value);

@@ -1,8 +1,8 @@
 //////////////////////////////////SETTINGS//////////////////////////////////
 const apiKey = "2a1ce2b4-b597-4755-a4a3-d75b4cbe7ddb"; 
 const baseUrl = "https://api.openchargemap.io/v3/poi";
-const maxResults = 100; //amount of chargestations to return from the API (setting it to 1 only returns the nearest)
-const enableDebug = true; //enables console logs if true
+const maxResults = 250; //amount of chargestations to return from the API (setting it to 1 only returns the nearest)
+const enableDebug = false; //enables console logs if true
 //////////////////////////////////SETTINGS END///////////////////////////////
 
 

@@ -139,7 +139,8 @@ function calculateChargeTime() {
     }
     sign = sign == 1 ? '' : '-';
     chargeTime = sign + hour + ':' + minute;
-    sessionStorage.setItem('chargeTime', {hour: hour, minute: minute});
+    sessionStorage.setItem('chargeTimeHour', hour);
+    sessionStorage.setItem('chargeTimeMinute', minute);
 
     console.log("chargeTime",chargeTime);
     return chargeTime;
@@ -195,13 +196,18 @@ function numberOfStops (){
 }
 function totalTravelTime () {
     calculateChargeTime();
-    let chargingTimeTotal = sessionStorage.getItem("chargeTime");
-    let travelTime =  sessionStorage.getItem("travelTime");
-    let totalMinutes = chargingTimeTotal.minute + travelTime.minute;
-    let totalHours = chargingTimeTotal.hour + travelTime.hour;
+    let chargingTimeHour = Number(sessionStorage.getItem("chargeTimeHour"));
+    let chargingTimeMinute = Number(sessionStorage.getItem("chargeTimeMinute"));
+    let travelTimeHour =  Number(sessionStorage.getItem("travelTimeHour"));
+    let travelTimeMinute =  Number(sessionStorage.getItem("travelTimeMinute"));
+    let totalMinutes = chargingTimeMinute + travelTimeMinute;
+    let totalHours = chargingTimeHour + travelTimeHour;
     if (totalMinutes / 60 > 1) {
         totalHours += Math.floor(totalMinutes / 60);
+        totalMinutes = totalMinutes % 60;
     }
+    console.log("totalHours",totalHours);
+    console.log("totalMinutes",totalMinutes);
     return {hour: totalHours, minute: totalMinutes};
 }
     

@@ -145,7 +145,7 @@ function outPutText() {
   const From = document.createElement("p");
   var value = document.getElementById("from").value;
   From.id = "from";
-  From.innerHTML ="<strong>From</strong>:" + value + "<br />";
+  From.innerHTML ="<strong>From</strong>: " + value + "<br />";
   output.appendChild(From);
   //map.controls[google.maps.ControlPosition.LEFT_TOP].push(From);
 
@@ -153,7 +153,7 @@ function outPutText() {
   const To = document.createElement("p");
   value = document.getElementById("to").value;
   To.id = "to";
-  To.innerHTML ="<strong>To</strong>:" + value + "<br />";
+  To.innerHTML ="<strong>To</strong>: " + value + "<br />";
   output.appendChild(To);
   //map.controls[google.maps.ControlPosition.LEFT_TOP].push(To);
 
@@ -162,55 +162,56 @@ function outPutText() {
   value = document.getElementById("make").value;
   var valueB = document.getElementById("model").value;
   ModelMake.id = "modelMake";
-  ModelMake.innerHTML ="<strong>EV</strong>: "+ value +" "+ valueB +"<br />";
+  ModelMake.innerHTML ="<strong>Vehicle</strong>: "+ value +" "+ valueB +"<br />";
   output.appendChild(ModelMake);
   //map.controls[google.maps.ControlPosition.LEFT_TOP].push(ModelMake);
 
   // Range
   const Range = document.createElement("p");
-  value = calculateRange();
+  value = parseInt(calculateRange()) + " km";
+  
   Range.id = "range";
   Range.innerHTML ="<strong>Range</strong>: "+ value +"<hr />";
   output.appendChild(Range);
   //map.controls[google.maps.ControlPosition.LEFT_TOP].push(Range);
 
   // # of charge-stops
-  const AmountOfStops = document.createElement("p");
+  const AmountOfStops = document.createElement("h1");
   value = numberOfStops();
   AmountOfStops.id = "numberOfStops";
-  AmountOfStops.innerHTML ="<strong>Number of Stops</strong>: "+ value +"<br />";
+  AmountOfStops.innerHTML ="Number of Stops: <strong>"+ value +"</strong><br />";
   output.appendChild(AmountOfStops);
   //map.controls[google.maps.ControlPosition.LEFT_TOP].push(AmountOfStops);
 
   // Total charge time
-  const ChargeTime = document.createElement("p");
+  const ChargeTime = document.createElement("h1");
   value = calculateChargeTime();
   ChargeTime.id = "chargeTime";
-  ChargeTime.innerHTML ="<strong>Total charge time</strong>: "+ value +"<br />";
+  ChargeTime.innerHTML ="Charge time: <strong>"+ value +"</strong><br />";
   output.appendChild(ChargeTime);
   //map.controls[google.maps.ControlPosition.LEFT_TOP].push(ChargeTime);
 
   // Total charge price
-  const ChargePrice = document.createElement("p");
+  const ChargePrice = document.createElement("h1");
   value = calculateChargePrice();
   ChargePrice.id = "chargePrice";
-  ChargePrice.innerHTML ="<strong>Total charge price</strong>: €"+ value +"<br />";
+  ChargePrice.innerHTML ="Charge price: <strong>€"+ value +"</strong><br />";
   output.appendChild(ChargePrice);
   //map.controls[google.maps.ControlPosition.LEFT_TOP].push(ChargePrice);
 
   // Total distance
-  const TotalDistance = document.createElement("p");
+  const TotalDistance = document.createElement("h1");
   value = sessionStorage.getItem("totalDistance");
   TotalDistance.id = "totalDistance";
-  TotalDistance.innerHTML ="<strong>Total distance</strong>: "+ value +"<br />";
+  TotalDistance.innerHTML ="Distance: <strong>"+ value +"</strong><br />";
   output.appendChild(TotalDistance);
   //map.controls[google.maps.ControlPosition.LEFT_TOP].push(TotalDistance);
 
   // Total time
-  const TotalTime = document.createElement("p");
+  const TotalTime = document.createElement("h1");
   value = totalTravelTime();
   TotalTime.id = "totalTime";
-  TotalTime.innerHTML ="<strong>Total time</strong>: "+ value.hour + ":" + value.minute + "<br />";
+  TotalTime.innerHTML ="Total time: <strong>"+ value.hour + ":" + value.minute + "</strong><br />";
   output.appendChild(TotalTime);
   
   

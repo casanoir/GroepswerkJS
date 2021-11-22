@@ -118,7 +118,7 @@ function calculateChargeTime() {
     let distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
 
     ////pick smallest chargingPower => car vs chargePoint
-    let chargingPower = (carchargingPower >= 22) ? 22 : carchargingPower; 
+    let chargingPower = (carchargingPower >= 50) ? 50 : carchargingPower; 
     ////calculate charging time (float)
     /* let temp = document.getElementById("batteryLevel").value;
     console.log("level",temp);

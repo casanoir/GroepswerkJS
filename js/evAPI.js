@@ -140,6 +140,7 @@ function calculateChargeTime() {
     sign = sign == 1 ? '' : '-';
     chargeTime = sign + hour + ':' + minute;
     sessionStorage.setItem('chargeTime', {hour: hour, minute: minute});
+
     console.log("chargeTime",chargeTime);
     return chargeTime;
 };

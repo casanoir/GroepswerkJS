@@ -86,15 +86,18 @@ function showTotalEVData(model) {
             resultMap["Maximum_DC_chargingPower_kW"] = item.Maximum_DC_chargingPower_kW;
             //// resultMap["Range_WLTP_km"] = item.Range_WLTP_km; => incorrect values in API
             resultMap["Battery_capacity_kWh"] = item.Battery_capacity_kWh;
+            sessionStorage.setItem('consumption', resultMap.mean_EnergyConsumption_kWh_per_100km);
+            sessionStorage.setItem('chargingPower', resultMap.Maximum_DC_chargingPower_kW);
+            sessionStorage.setItem('battery', resultMap.Battery_capacity_kWh);
             return resultMap;
         });
         console.log("EVdata",mapEVdata);
 
-        calculateChargeTime(mapEVdata[0].Maximum_DC_chargingPower_kW, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km)
+        /* calculateChargeTime(mapEVdata[0].Maximum_DC_chargingPower_kW, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km)
         calculateChargePrice(mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
         /*calculateRangePercentage(mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);*/        
-        calculateRange (mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
-        numberOfStops (mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
+        /*calculateRange (mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
+        numberOfStops (mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km); */
     });
 }
 document.getElementById("model").addEventListener("change", function() {
@@ -109,14 +112,14 @@ Equation (charge time demand=Vehicle Battery Capacity (KWH)/ Charging Station De
 
 => battery capacity to be loaded / load power.
  */
-function calculateChargeTime(carchargingPower, consumption) {
-    ////pick smallest chargingPower => car vs chargePoint
-    /* let chargePointChargingPower = 22; /// to be linked to priceCharge API
-    let chargingPower = (carchargingPower >= chargePointChargingPower) ? chargePointChargingPower : carchargingPower; */
-    let chargingPower = carchargingPower;
-    ////calculate charging time (float)
+function calculateChargeTime() {
+    let carchargingPower = sessionStorage.getItem("chargingPower"); 
+    let consumption = sessionStorage.getItem("consumption");
     let distance = sessionStorage.getItem("distance");
-    console.log(distance);
+
+    ////pick smallest chargingPower => car vs chargePoint
+    let chargingPower = (carchargingPower >= 22) ? 22 : carchargingPower; 
+    ////calculate charging time (float)
     /* let temp = document.getElementById("batteryLevel").value;
     console.log("level",temp);
     let level = (100-temp)/100;
@@ -135,7 +138,9 @@ function calculateChargeTime(carchargingPower, consumption) {
     minute = '0' + minute; 
     }
     sign = sign == 1 ? '' : '-';
-    chargeTime = sign + hour + ':' + minute;``
+    chargeTime = sign + hour + ':' + minute;
+    sessionStorage.setItem('chargeTime', {hour: hour, minute: minute});
+
     console.log("chargeTime",chargeTime);
     return chargeTime;
 };
@@ -144,8 +149,9 @@ function calculateChargeTime(carchargingPower, consumption) {
 }); */
 
 ////calculate chargetime to be used in Accordion
-function calculateChargePrice (consumption) {
-    let distance = totalDistance(); // From GoogleMaps API (Abdu - To Do)            
+function calculateChargePrice () {
+    let distance = sessionStorage.getItem("distance");
+    let consumption = sessionStorage.getItem("consumption");
     let price = 0.26; // from ChargePrice API => NA because data is not clean
     /* let temp = document.getElementById("batteryLevel").value;
     let toFullBattery = battery*(100-temp)/100;
@@ -169,17 +175,35 @@ function calculateChargePrice (consumption) {
     return rangePercentage;
 }; */
 
-function calculateRange (battery, consumption){
-    let correctedRange = battery / consumption * 100;
-    console.log("fullRange",correctedRange);
+function calculateRange (){
+    let consumption = sessionStorage.getItem("consumption");
+    let battery = sessionStorage.getItem("battery");
+    let correctedRange = Math.round(((battery / consumption * 100)+Number.EPSILON)*100)/100 +` km`;
+    console.log("Range",correctedRange);
     return correctedRange
 }
 
-function numberOfStops (battery, consumption){
-    let distance = totalDistance();
+function numberOfStops (){
+    let consumption = sessionStorage.getItem("consumption");
+    let battery = sessionStorage.getItem("battery");
+    let distance = sessionStorage.getItem("distance");
     let correctedRange = battery / consumption * 100;
     let numberOfStopsFloat = distance / correctedRange; 
     let numberOfStops = Math.floor(numberOfStopsFloat);
     console.log("numberOfStops",numberOfStops);
     return numberOfStops
 }
+function totalTravelTime () {
+    calculateChargeTime();
+    let chargingTimeTotal = sessionStorage.getItem("chargeTime");
+    let travelTime =  sessionStorage.getItem("travelTime");
+    let totalMinutes = chargingTimeTotal.minute + travelTime.minute;
+    let totalHours = chargingTimeTotal.hour + travelTime.hour;
+    if (totalMinutes / 60 > 1) {
+        totalHours += MAth.floor(totalMinutes / 60);
+    }
+    return chargingTime + travelTime;
+}
+    
+
+    

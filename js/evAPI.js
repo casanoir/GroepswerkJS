@@ -113,9 +113,9 @@ Equation (charge time demand=Vehicle Battery Capacity (KWH)/ Charging Station De
 => battery capacity to be loaded / load power.
  */
 function calculateChargeTime() {
-    let carchargingPower = sessionStorage.getItem("chargingPower"); 
-    let consumption = sessionStorage.getItem("consumption");
-    let distance = sessionStorage.getItem("distance");
+    let carchargingPower = Number(sessionStorage.getItem("chargingPower")); 
+    let consumption = Number(sessionStorage.getItem("consumption"));
+    let distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
 
     ////pick smallest chargingPower => car vs chargePoint
     let chargingPower = (carchargingPower >= 22) ? 22 : carchargingPower; 
@@ -151,14 +151,14 @@ function calculateChargeTime() {
 
 ////calculate chargetime to be used in Accordion
 function calculateChargePrice () {
-    let distance = sessionStorage.getItem("distance");
-    let consumption = sessionStorage.getItem("consumption");
+    let distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
+    let consumption = Number(sessionStorage.getItem("consumption"));
     let price = 0.26; // from ChargePrice API => NA because data is not clean
     /* let temp = document.getElementById("batteryLevel").value;
     let toFullBattery = battery*(100-temp)/100;
     ///console.log("extra",toFullBattery);
     let roundedPrice = Math.round((((((distance/100)*consumption)+toFullBattery)*price)+Number.EPSILON)*100)/100 +` €`; */
-    let roundedPrice = Math.round(((((distance/100)*consumption)*price)+Number.EPSILON)*100)/100 +` €`;
+    let roundedPrice = Math.round(((((distance/100)*consumption)*price)+Number.EPSILON)*100)/100;
     console.log("Price",roundedPrice);
     return roundedPrice;
 };
@@ -177,17 +177,17 @@ function calculateChargePrice () {
 }; */
 
 function calculateRange (){
-    let consumption = sessionStorage.getItem("consumption");
-    let battery = sessionStorage.getItem("battery");
+    let consumption = Number(sessionStorage.getItem("consumption"));
+    let battery = Number(sessionStorage.getItem("battery"));
     let correctedRange = Math.round(((battery / consumption * 100)+Number.EPSILON)*100)/100 +` km`;
     console.log("Range",correctedRange);
     return correctedRange
 }
 
 function numberOfStops (){
-    let consumption = sessionStorage.getItem("consumption");
-    let battery = sessionStorage.getItem("battery");
-    let distance = sessionStorage.getItem("distance");
+    let consumption = Number(sessionStorage.getItem("consumption"));
+    let battery = Number(sessionStorage.getItem("battery"));
+    let distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
     let correctedRange = battery / consumption * 100;
     let numberOfStopsFloat = distance / correctedRange; 
     let numberOfStops = Math.floor(numberOfStopsFloat);

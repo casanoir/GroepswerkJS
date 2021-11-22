@@ -97,6 +97,9 @@ function calculateRoute() {
           arr = travelTimeString.split(' ');
           sessionStorage.setItem("travelTimeHour", arr[0]);
           sessionStorage.setItem("travelTimeMinute", arr[2]);
+
+          sessionStorage.setItem("totalDistance", result.routes[0].legs[0].distance.text);
+
          //display route
           directionsDisplay.setDirections(result);
       } else {
@@ -135,11 +138,83 @@ function googleMapShow() {
 
 //
 function outPutText() {
-  const instructionsElement = document.createElement("p");
-  const a = totalTravelTime();
-  instructionsElement.id = "instructions";
-  instructionsElement.innerHTML ="<strong>From</strong>: "+ a.hour + ":" + a.minute +".<br /><strong>From</strong>: "+ document.getElementById("to").value+".<br />";
-  map.controls[google.maps.ControlPosition.LEFT_TOP].push(instructionsElement);
+
+  var output = document.createElement("div");
+  output.id = "instructions";
+  // From
+  const From = document.createElement("p");
+  var value = document.getElementById("from").value;
+  From.id = "from";
+  From.innerHTML ="<strong>From</strong>:" + value + "<br />";
+  output.appendChild(From);
+  //map.controls[google.maps.ControlPosition.LEFT_TOP].push(From);
+
+  // To
+  const To = document.createElement("p");
+  value = document.getElementById("to").value;
+  To.id = "to";
+  To.innerHTML ="<strong>To</strong>:" + value + "<br />";
+  output.appendChild(To);
+  //map.controls[google.maps.ControlPosition.LEFT_TOP].push(To);
+
+  // Model and make
+  const ModelMake = document.createElement("p");
+  value = document.getElementById("make").value;
+  var valueB = document.getElementById("model").value;
+  ModelMake.id = "modelMake";
+  ModelMake.innerHTML ="<strong>EV</strong>: "+ value +" "+ valueB +"<br />";
+  output.appendChild(ModelMake);
+  //map.controls[google.maps.ControlPosition.LEFT_TOP].push(ModelMake);
+
+  // Range
+  const Range = document.createElement("p");
+  value = calculateRange();
+  Range.id = "range";
+  Range.innerHTML ="<strong>Range</strong>: "+ value +"<hr />";
+  output.appendChild(Range);
+  //map.controls[google.maps.ControlPosition.LEFT_TOP].push(Range);
+
+  // # of charge-stops
+  const AmountOfStops = document.createElement("p");
+  value = numberOfStops();
+  AmountOfStops.id = "numberOfStops";
+  AmountOfStops.innerHTML ="<strong>Number of Stops</strong>: "+ value +"<br />";
+  output.appendChild(AmountOfStops);
+  //map.controls[google.maps.ControlPosition.LEFT_TOP].push(AmountOfStops);
+
+  // Total charge time
+  const ChargeTime = document.createElement("p");
+  value = calculateChargeTime();
+  ChargeTime.id = "chargeTime";
+  ChargeTime.innerHTML ="<strong>Total charge time</strong>: "+ value +"<br />";
+  output.appendChild(ChargeTime);
+  //map.controls[google.maps.ControlPosition.LEFT_TOP].push(ChargeTime);
+
+  // Total charge price
+  const ChargePrice = document.createElement("p");
+  value = calculateChargePrice();
+  ChargePrice.id = "chargePrice";
+  ChargePrice.innerHTML ="<strong>Total charge price</strong>: €"+ value +"<br />";
+  output.appendChild(ChargePrice);
+  //map.controls[google.maps.ControlPosition.LEFT_TOP].push(ChargePrice);
+
+  // Total distance
+  const TotalDistance = document.createElement("p");
+  value = sessionStorage.getItem("totalDistance");
+  TotalDistance.id = "totalDistance";
+  TotalDistance.innerHTML ="<strong>Total distance</strong>: "+ value +"<br />";
+  output.appendChild(TotalDistance);
+  //map.controls[google.maps.ControlPosition.LEFT_TOP].push(TotalDistance);
+
+  // Total time
+  const TotalTime = document.createElement("p");
+  value = totalTravelTime();
+  TotalTime.id = "totalTime";
+  TotalTime.innerHTML ="<strong>Total time</strong>: "+ value.hour + ":" + value.minute + "<br />";
+  output.appendChild(TotalTime);
+  
+  
+  map.controls[google.maps.ControlPosition.LEFT_TOP].push(output);
 }
 
 

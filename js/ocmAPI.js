@@ -1,37 +1,17 @@
-/////////////////////////-->getChargeStations();<--//////////////////////////
-//the function requires 2 parameters: latitude and longitude, in that order//
-//               example: getChargeStations(51.23074, 5.31349);            //
-//                                                                         //
-//                            suggested use:                               //
-//      const exampleObject = getChargeStations(51.23074, 5.31349);        //
-//                                                                         //
-//      This will fill "exampleObject" with the following properties:      //
-//                          "latitude" as an integer                       //
-//                         "longitude" as an integer                       //
-//                             "name" as a string                          //
-//                           "cargeKW" as an integer                       //
-//  "price": "Free text description of likely usage costs associated with  //
-//this site. Generally relates to parking charges whether network operates //
-//this site as Free" -> i guess as a string                                //
-/////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////SETTINGS//////////////////////////////////
 const apiKey = "2a1ce2b4-b597-4755-a4a3-d75b4cbe7ddb"; 
 const baseUrl = "https://api.openchargemap.io/v3/poi";
-const searchRadius = 20; //distance from the provided lati and longi to look for stations
-const radiusUnit = "km"; //unit for the distance to look in (can be "km" or "miles")
-const maxResults = 1; //amount of chargestations to return from the API (setting it to 1 only returns the nearest)
-const enableDebug = false; //enables console logs if true
+const maxResults = 100; //amount of chargestations to return from the API (setting it to 1 only returns the nearest)
+const enableDebug = true; //enables console logs if true
 //////////////////////////////////SETTINGS END///////////////////////////////
 
 
-async function asyncGetChargingStations(latitude, longitude) {
+async function asyncGetChargingStations(latitudeA, longitudeA, latitudeB, longitudeB) {
     var url = new URL(baseUrl); //create the API contact url and define it's parameters
-    const params = [["latitude", latitude],
-                    ["longitude", longitude],
-                    ["distance", searchRadius], 
-                    ["distanceunit", radiusUnit],
-                    ["maxresults", maxResults]];
+    const boundingBox = "(" + latitudeA + "," + longitudeA + ")(" + latitudeB + "," + longitudeB + ")";
+    const params = [["boundingbox", boundingBox],
+                    ["maxresults", maxResults]]
+
     /* var searchParams = new URLSearchParams(params);
     const searchParamString = searchParams.toString();
     url.search = searchParamString; */
@@ -50,22 +30,27 @@ async function asyncGetChargingStations(latitude, longitude) {
     const data = await response.json();
     if(enableDebug) console.log(data);
 
-    //create object with only the necesary data and return it
-    var bestStation = new Object();
-        bestStation["name"] = data[0].AddressInfo.Title;
-        bestStation["latitude"] = data[0].AddressInfo.Latitude;
-        bestStation["longitude"] = data[0].AddressInfo.Longitude;
-        bestStation["price"] = data[0].UsageCost;
-        bestStation["chargeKW"] = data[0].Connections[0].PowerKW;
+    var stationArray = [];
+    data.forEach(function (item, index) {
+        var station = {};
+        station.latitude = data[index].AddressInfo.Latitude;
+        station.longitude = data[index].AddressInfo.Longitude;
+        station.name = data[index].AddressInfo.Title;
 
-    if(enableDebug) console.log(bestStation);
-    return bestStation;
+        stationArray.push(station);
+    });
+    if(enableDebug) console.log(stationArray);
+    return stationArray;
+
 }
 
+
+
+//dont remove need for reference to call this shit because else you get a ton of bs errors and shit
 async function ocmTestCall() { //function to be deleted/commented later
-    const chargeStop = await asyncGetChargingStations(51.23074, 5.31349);
+    const chargeStop = await asyncGetChargingStations(51.23074, 5.31349, 48.864716, 2.349014);
     console.log("testcall result:");
     console.log(chargeStop);
-    console.log(chargeStop.name);
+    console.log(chargeStop[5].name);
 }
 

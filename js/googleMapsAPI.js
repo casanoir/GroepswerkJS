@@ -72,12 +72,6 @@ async function placeMarkers() {
   });
 }
 
-/* const chargePalenTotal = [
-  [{ lat: 50.55045, lng: 4.14878 }, "chargePalen3"],
-  [{ lat: 50.85045, lng: 4.54878 }, "chargePalen1"],
-  [{ lat: 50.75045, lng: 4.34878 }, "chargePalen2"],
-]; */
-
 //define calculate Route function
 function calculateRoute() {
   //create request
@@ -93,12 +87,14 @@ function calculateRoute() {
   directionsService.route(request, function (result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
 
-          //Get distance and time
+          /*Get distance and time
           const output = document.querySelector('#googleMapOutput');
           let travelTimeString = result.routes[0].legs[0].duration.text;
           arr = travelTimeString.split(' ');
           sessionStorage.setItem("travelTime", {hour: arr[0], minute: arr[2]});
           output.innerHTML = "<div class='alert-info'>From: " + document.getElementById("from").value + ".<br />To: " + document.getElementById("to").value + ".<br /> Driving distance <i class='fas fa-road'></i> : " + result.routes[0].legs[0].distance.text + ".<br />Duration <i class='fas fa-hourglass-start'></i> : " + result.routes[0].legs[0].duration.text + ".</div>";
+         
+         */
          //display route
           directionsDisplay.setDirections(result);
       } else {
@@ -113,6 +109,7 @@ function calculateRoute() {
       
   });
   placeMarkers();
+  outPutText();
 }
 
 // Hide for container for Form
@@ -135,46 +132,12 @@ function googleMapShow() {
 }    
 
 //
-function calculateRouteMarker(chargePalen) 
-{
-  const waypts = [];
-  
-  for (let i = 0; i < chargePalen.length; i++) {
-    if (chargePalen.options[i].selected) {
-      waypts.push({
-        location: chargePalen[i].value,
-        stopover: true,
-      });
-    }
-  }
-
-  directionsService
-    .route({
-      origin: document.getElementById("from").value,
-      destination: document.getElementById("to").value,
-      waypoints: waypts,
-      optimizeWaypoints: true,
-      travelMode: google.maps.TravelMode.DRIVING,
-    })
-    .then((response) => {
-      directionsRenderer.setDirections(response);
-
-      const route = response.routes[0];
-      const output = document.querySelector('#googleMapOutput');
-
-    
-      // For each route, display summary information.
-      for (let i = 0; i < route.legs.length; i++) {
-        const routeSegment = i + 1;
-
-        output.innerHTML +=
-          "<b>Route Segment: " + routeSegment + "</b><br>";
-        output.innerHTML += route.legs[i].start_address + " to ";
-        output.innerHTML += route.legs[i].end_address + "<br>";
-        output.innerHTML += route.legs[i].distance.text + "<br><br>";
-      }
-    })
-    .catch((e) => window.alert("Directions request failed due to " + status));
+function outPutText() {
+  const instructionsElement = document.createElement("p");
+  instructionsElement.id = "instructions";
+  instructionsElement.innerHTML ="<strong>From</strong>: "+ document.getElementById("from").value+".<br /><strong>From</strong>: "+ document.getElementById("to").value+".<br />";
+  map.controls[google.maps.ControlPosition.LEFT_TOP].push(instructionsElement);
 }
+
 
  

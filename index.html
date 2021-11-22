@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
-
+    <script src="https://kit.fontawesome.com/d8d68bfe42.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <header id="header" class="mb-4">
@@ -47,11 +47,25 @@
     <div class="col-md-1"></div>
   </main>
   <main id="containerForGoogleMap" class="text-center" style="display:none">
-    <div id="googleMap" class="container-fluid borderradius"> 
+    <div class="row">
+      <div id="googleMap" class="container-fluid borderradius"></div>
     </div>
-    <div id="googleMapOutput" class="row text-center ">
-    
+    <div id="mapAccordionRow" class="row g-5 mt-5">
+      <div id="mapAccordionContainer" class="col-md-3 p-2">
+        <h6>van: <span id="accStartPoint" class="text-white">Startpunt</span></h6>
+        <p>
+          <a data-toggle="collapse" href="#accCollapse1" role="button" aria-expanded="false" aria-controls="accCollapse1" onclick="testingshit()">
+            105 km <br id="accBR1" style="display:none"/>1h 05m
+          </a>
+          <div class="collapse" id="accCollapse1">
+           chargetime<br/>chargeprice
+          </div>
+        </p>
+        <h6>naar: <span id="accEndPoint" class="text-white">Eindpunt</span></h6>
+      </div>
+      <div class="col-md-9"></div>
     </div>
+    <div id="googleMapOutput" class="row text-center "></div>
   </main>
 <footer>
   <div class="row">

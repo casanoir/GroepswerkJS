@@ -21,11 +21,11 @@ const baseUrl = "https://api.openchargemap.io/v3/poi";
 const searchRadius = 20; //distance from the provided lati and longi to look for stations
 const radiusUnit = "km"; //unit for the distance to look in (can be "km" or "miles")
 const maxResults = 1; //amount of chargestations to return from the API (setting it to 1 only returns the nearest)
-const enableDebug = true; //enables console logs if true
+const enableDebug = false; //enables console logs if true
 //////////////////////////////////SETTINGS END///////////////////////////////
 
 
-async function getChargingStations(latitude, longitude) {
+async function asyncGetChargingStations(latitude, longitude) {
     var url = new URL(baseUrl); //create the API contact url and define it's parameters
     const params = [["latitude", latitude],
                     ["longitude", longitude],
@@ -57,14 +57,15 @@ async function getChargingStations(latitude, longitude) {
         bestStation["longitude"] = data[0].AddressInfo.Longitude;
         bestStation["price"] = data[0].UsageCost;
         bestStation["chargeKW"] = data[0].Connections[0].PowerKW;
+
     if(enableDebug) console.log(bestStation);
     return bestStation;
 }
 
-
-
-function ocmTestCall() { //function to be deleted/commented later
-    const chargeStop = getChargingStations(51.23074, 5.31349);
+async function ocmTestCall() { //function to be deleted/commented later
+    const chargeStop = await asyncGetChargingStations(51.23074, 5.31349);
     console.log("testcall result:");
     console.log(chargeStop);
+    console.log(chargeStop.name);
 }
+

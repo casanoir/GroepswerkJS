@@ -58,8 +58,6 @@ function calculateRoute() {
           var a = parseInt(x);
          //display route
           directionsDisplay.setDirections(result);
-          console.log(a);
-          return a;
       } else {
           //delete route from map
           directionsDisplay.setDirections({ routes: [] });
@@ -111,9 +109,8 @@ function totalDistance() {
           var a = parseInt(x);
          //display route
           directionsDisplay.setDirections(result);
-          console.log(a);
-          return a;
-      } 
+          sessionStorage.setItem("distance", a);
+        } 
       
   });
 

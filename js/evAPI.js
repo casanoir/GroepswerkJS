@@ -90,9 +90,11 @@ function showTotalEVData(model) {
         });
         console.log("EVdata",mapEVdata);
 
-        calculateChargeTime(mapEVdata[0].Maximum_DC_chargingPower_kW, mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km)
-        calculateChargePrice(mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
-        calculateRangePercentage(mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
+        calculateChargeTime(mapEVdata[0].Maximum_DC_chargingPower_kW, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km)
+        calculateChargePrice(mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
+        /*calculateRangePercentage(mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);*/        
+        calculateRange (mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
+        numberOfStops (mapEVdata[0].Battery_capacity_kWh, mapEVdata[0].mean_EnergyConsumption_kWh_per_100km);
     });
 }
 document.getElementById("model").addEventListener("change", function() {
@@ -107,16 +109,19 @@ Equation (charge time demand=Vehicle Battery Capacity (KWH)/ Charging Station De
 
 => battery capacity to be loaded / load power.
  */
-function calculateChargeTime(carchargingPower, battery, consumption) {
+function calculateChargeTime(carchargingPower, consumption) {
     ////pick smallest chargingPower => car vs chargePoint
-    let chargePointChargingPower = 22; /// to be linked to priceCharge API
-    let chargingPower = (carchargingPower >= chargePointChargingPower) ? chargePointChargingPower : carchargingPower;
+    /* let chargePointChargingPower = 22; /// to be linked to priceCharge API
+    let chargingPower = (carchargingPower >= chargePointChargingPower) ? chargePointChargingPower : carchargingPower; */
+    let chargingPower = carchargingPower;
     ////calculate charging time (float)
-    let distance = 300; // From GoogleMaps API (Abdu - To Do)
-    let temp = document.getElementById("batteryLevel").value;
+    let distance = sessionStorage.getItem("distance");
+    console.log(distance);
+    /* let temp = document.getElementById("batteryLevel").value;
     console.log("level",temp);
     let level = (100-temp)/100;
-    let number = ((battery*level)+((distance/100)*consumption)) / chargingPower;
+    let number = ((battery*level)+((distance/100)*consumption)) / chargingPower; */
+    let number = ((distance/100)*consumption)/chargingPower;
     /////console.log("number",number);
     ////convert float to hh:mm
     let sign = (number >= 0) ? 1 : -1;
@@ -130,22 +135,23 @@ function calculateChargeTime(carchargingPower, battery, consumption) {
     minute = '0' + minute; 
     }
     sign = sign == 1 ? '' : '-';
-    time = sign + hour + ':' + minute;``
-    console.log("time",time)
-    return time
+    chargeTime = sign + hour + ':' + minute;``
+    console.log("chargeTime",chargeTime)
+    return chargeTime
 };
-document.getElementById("batteryLevel").addEventListener("change", function() {
+/* document.getElementById("batteryLevel").addEventListener("change", function() {
     showTotalEVData(document.getElementById("model").value);
-});
+}); */
 
 ////calculate chargetime to be used in Accordion
-function calculateChargePrice (battery,consumption) {
-    let distance = 400; // From GoogleMaps API (Abdu - To Do)            
+function calculateChargePrice (consumption) {
+    let distance = totalDistance(); // From GoogleMaps API (Abdu - To Do)            
     let price = 0.26; // from ChargePrice API => NA because data is not clean
-    let temp = document.getElementById("batteryLevel").value;
+    /* let temp = document.getElementById("batteryLevel").value;
     let toFullBattery = battery*(100-temp)/100;
     ///console.log("extra",toFullBattery);
-    let roundedPrice = Math.round((((((distance/100)*consumption)+toFullBattery)*price)+Number.EPSILON)*100)/100 +` €`;
+    let roundedPrice = Math.round((((((distance/100)*consumption)+toFullBattery)*price)+Number.EPSILON)*100)/100 +` €`; */
+    let roundedPrice = Math.round(((((distance/100)*consumption)*price)+Number.EPSILON)*100)/100 +` €`;
     console.log("Price",roundedPrice);
     return roundedPrice;
 };
@@ -155,10 +161,25 @@ function calculateChargePrice (battery,consumption) {
 => solution: battery capacity/consumpion*100
 => percentage: solution*level/100
 */
-function calculateRangePercentage (battery, consumption){
+/* function calculateRangePercentage (battery, consumption){
     let correctedRange = battery / consumption * 100;
     let temp = document.getElementById("batteryLevel").value;
     let rangePercentage = correctedRange*temp/100;
-    console.log("Range",rangePercentage);
+    console.log("levelRange",rangePercentage);
     return rangePercentage;
-};
+}; */
+
+function calculateRange (battery, consumption){
+    let correctedRange = battery / consumption * 100;
+    console.log("fullRange",correctedRange);
+    return correctedRange
+}
+
+function numberOfStops (battery, consumption){
+    let distance = totalDistance();
+    let correctedRange = battery / consumption * 100;
+    let numberOfStopsFloat = distance / correctedRange; 
+    let numberOfStops = Math.floor(numberOfStopsFloat);
+    console.log("numberOfStops",numberOfStops);
+    return numberOfStops
+}

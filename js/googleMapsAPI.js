@@ -95,6 +95,9 @@ function calculateRoute() {
 
           //Get distance and time
           const output = document.querySelector('#googleMapOutput');
+          let travelTimeString = result.routes[0].legs[0].duration.text;
+          arr = travelTimeString.split(' ');
+          sessionStorage.setItem("travelTime", {hour: arr[0], minute: arr[2]});
           output.innerHTML = "<div class='alert-info'>From: " + document.getElementById("from").value + ".<br />To: " + document.getElementById("to").value + ".<br /> Driving distance <i class='fas fa-road'></i> : " + result.routes[0].legs[0].distance.text + ".<br />Duration <i class='fas fa-hourglass-start'></i> : " + result.routes[0].legs[0].duration.text + ".</div>";
          //display route
           directionsDisplay.setDirections(result);

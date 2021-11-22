@@ -200,9 +200,9 @@ function totalTravelTime () {
     let totalMinutes = chargingTimeTotal.minute + travelTime.minute;
     let totalHours = chargingTimeTotal.hour + travelTime.hour;
     if (totalMinutes / 60 > 1) {
-        totalHours += MAth.floor(totalMinutes / 60);
+        totalHours += Math.floor(totalMinutes / 60);
     }
-    return chargingTime + travelTime;
+    return {hour: totalHours, minute: totalMinutes};
 }
     
 

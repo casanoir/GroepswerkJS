@@ -35,7 +35,7 @@ $(document).ready(function () {
 // Set Markers : LatLng and title text for charhge palen.
 async function placeMarkers() {
 
-  var origin = document.getElementById("from").value;
+  /*var origin = document.getElementById("from").value;
   var destination = document.getElementById("to").value;
   var coder = new google.maps.Geocoder();
   coder.geocode( {address:origin}, function(results, status) {
@@ -48,7 +48,29 @@ async function placeMarkers() {
     });
    
   const chargePalenTotal = await asyncGetChargingStations(51.23074, 5.31349, 48.864716, 2.349014);
-  console.log(chargePalenTotal);
+ */
+  //get lat lng from From to To
+  var geocoder = new google.maps.Geocoder();
+  var addressFrom= document.getElementById("from").value;
+  var addressTo= document.getElementById("to").value;
+
+  geocoder.geocode( { 'addressFrom': address}, function(results, status) {
+
+  if (status == google.maps.GeocoderStatus.OK) {
+    var latitudeFrom = results[0].geometry.location.latitude;
+    var longitudeFrom = results[0].geometry.location.longitude;
+
+    } 
+});
+  geocoder.geocode( { 'addressTo': address}, function(results, status) {
+
+if (status == google.maps.GeocoderStatus.OK) {
+    var latitudeTo = results[0].geometry.location.latitude;
+    var longitudeTo= results[0].geometry.location.longitude;
+    
+    } 
+});
+const chargePalenTotal = await asyncGetChargingStations(latitudeFrom, longitudeFrom, latitudeTo, longitudeTo);
   //Marker Icon
   const image="images/marker.png";
   // Create the markers.

@@ -14,22 +14,25 @@ $(document).ready(function () {
 // Function for the map
   // set map options
   var myLatLng = { lat: 50.85045, lng: 4.34878 };
-  
-    var mapProp= {
-      center:myLatLng,
-      zoom:12,
-      mapTypeId: 'roadmap'
-    };
+  var mapProp= {
+    center:myLatLng,
+    zoom:12,
+    mapTypeControl: false,
+    zoomControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
+    zoomControl: true,
+    mapTypeId: 'roadmap'
+  };
   // create Map
-    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
   // create a Directions service obj to use the route method and get result for our request
-    var directionsService = new google.maps.DirectionsService();
+  var directionsService = new google.maps.DirectionsService();
   // create a DirectionsRenderer obj which we will use to display 
-    var directionsDisplay = new google.maps.DirectionsRenderer();
+  var directionsDisplay = new google.maps.DirectionsRenderer();
   //blind the directionsRenderer to the map
-    directionsDisplay.setMap(map);
+  directionsDisplay.setMap(map);
 // Set Markers : LatLng and title text for charhge palen.
-
 async function placeMarkers() {
 
   var origin = document.getElementById("from").value;
@@ -46,8 +49,7 @@ async function placeMarkers() {
    
   const chargePalenTotal = await asyncGetChargingStations(51.23074, 5.31349, 48.864716, 2.349014);
   console.log(chargePalenTotal);
-  // Create an info window to share between markers.
-  const infoWindow = new google.maps.InfoWindow();
+  //Marker Icon
   const image="images/marker.png";
   // Create the markers.
   Object.entries(chargePalenTotal).forEach((obj, i) => {
@@ -58,16 +60,18 @@ async function placeMarkers() {
       position: latlng,
       map: map,
       icon :image,
-      title: `${i + 1}. ${title}`,
-      label: `${i + 1}`,
+      title: `${title}`,
       optimized: false,
     });
+    // Create an info window to share between markers.
+    
+  const infoWindow = new google.maps.InfoWindow();
     // Add a click listener for each marker, and set up the info window.
     marker.addListener("click", () => {
       infoWindow.close();
       infoWindow.setContent(marker.getTitle());
       infoWindow.open(marker.getMap(), marker);
-      
+      calculateRouteToMarker(latlng);
     });
   });
 }
@@ -87,12 +91,6 @@ function calculateRoute() {
   directionsService.route(request, function (result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
 
-          /*Get distance and time
-          const output = document.querySelector('#googleMapOutput');
-         
-          output.innerHTML = "<div class='alert-info'>From: " + document.getElementById("from").value + ".<br />To: " + document.getElementById("to").value + ".<br /> Driving distance <i class='fas fa-road'></i> : " + result.routes[0].legs[0].distance.text + ".<br />Duration <i class='fas fa-hourglass-start'></i> : " + result.routes[0].legs[0].duration.text + ".</div>";
-         
-         */
           let travelTimeString = result.routes[0].legs[0].duration.text;
           arr = travelTimeString.split(' ');
           sessionStorage.setItem("travelTimeHour", arr[0]);
@@ -125,7 +123,8 @@ function mainHide() {
   } else {
     x.style.display = "none";
   }
-}    
+} 
+
 // Show for container for googleMap
 function googleMapShow() {
   var x = document.getElementById("containerForGoogleMap");
@@ -136,7 +135,7 @@ function googleMapShow() {
   }
 }    
 
-//
+// show the Output 
 function outPutText() {
 
   var output = document.createElement("div");

@@ -115,8 +115,16 @@ Equation (charge time demand=Vehicle Battery Capacity (KWH)/ Charging Station De
 function calculateChargeTime() {
     let carchargingPower = Number(sessionStorage.getItem("chargingPower")); 
     let consumption = Number(sessionStorage.getItem("consumption"));
-    let distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
+    let distance;
+    if (sessionStorage.getItem("totalDistance").includes(".")) {
+        distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
 
+    } else if (sessionStorage.getItem("totalDistance").includes(",")) {
+        distance = Number(sessionStorage.getItem("totalDistance").replace(',', '').split(" ")[0]);
+    }
+    else {
+        distance = Number(sessionStorage.getItem("totalDistance").split(" ")[0]);
+    }
     ////pick smallest chargingPower => car vs chargePoint
     let chargingPower = (carchargingPower >= 50) ? 50 : carchargingPower; 
     ////calculate charging time (float)
@@ -151,7 +159,16 @@ function calculateChargeTime() {
 
 ////calculate chargetime to be used in Accordion
 function calculateChargePrice () {
-    let distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
+    let distance;
+    if (sessionStorage.getItem("totalDistance").includes(".")) {
+        distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
+
+    } else if (sessionStorage.getItem("totalDistance").includes(",")) {
+        distance = Number(sessionStorage.getItem("totalDistance").replace(',', '').split(" ")[0]);
+    }
+    else {
+        distance = Number(sessionStorage.getItem("totalDistance").split(" ")[0]);
+    }
     let consumption = Number(sessionStorage.getItem("consumption"));
     let price = 0.26; // from ChargePrice API => NA because data is not clean
     /* let temp = document.getElementById("batteryLevel").value;
@@ -187,7 +204,16 @@ function calculateRange (){
 function numberOfStops (){
     let consumption = Number(sessionStorage.getItem("consumption"));
     let battery = Number(sessionStorage.getItem("battery"));
-    let distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
+    let distance;
+    if (sessionStorage.getItem("totalDistance").includes(".")) {
+        distance = Number(sessionStorage.getItem("totalDistance").replace('.', '').split(" ")[0]);
+
+    } else if (sessionStorage.getItem("totalDistance").includes(",")) {
+        distance = Number(sessionStorage.getItem("totalDistance").replace(',', '').split(" ")[0]);
+    }
+    else {
+        distance = Number(sessionStorage.getItem("totalDistance").split(" ")[0]);
+    }
     let correctedRange = battery / consumption * 100;
     let numberOfStopsFloat = distance / correctedRange; 
     let numberOfStops = Math.floor(numberOfStopsFloat);
